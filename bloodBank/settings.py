@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'hospitalOperations.apps.HospitaloperationsConfig',
     'userRequest.apps.UserrequestConfig',
     'userProfile.apps.UserprofileConfig',
+    'adminLogin.apps.AdminloginConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -415,22 +415,14 @@
                           Group</label>
                         <select class="form-control" id="bloodGroup"
                           name="bloodGroup">
-                          <option value="A+" {% if bloodGroup == 'A+'
-                            %}selected{% endif %}>A+</option>
-                          <option value="A-" {% if bloodGroup == 'A-'
-                            %}selected{% endif %}>A-</option>
-                          <option value="B+" {% if bloodGroup == 'B+'
-                            %}selected{% endif %}>B+</option>
-                          <option value="B-" {% if bloodGroup == 'B-'
-                            %}selected{% endif %}>B-</option>
-                          <option value="AB+" {% if bloodGroup == 'AB+'
-                            %}selected{% endif %}>AB+</option>
-                          <option value="AB-" {% if bloodGroup == 'AB-'
-                            %}selected{% endif %}>AB-</option>
-                          <option value="O+" {% if bloodGroup == 'O+'
-                            %}selected{% endif %}>O+</option>
-                          <option value="O-" {% if bloodGroup == 'O-'
-                            %}selected{% endif %}>O-</option>
+                          <option value="A+" {% if bloodGroup == 'A+'%}selected{% endif %}>A+</option>
+                          <option value="A-" {% if bloodGroup == 'A-'%}selected{% endif %}>A-</option>
+                          <option value="B+" {% if bloodGroup == 'B+'%}selected{% endif %}>B+</option>
+                          <option value="B-" {% if bloodGroup == 'B-' %}selected{% endif %}>B-</option>
+                          <option value="AB+" {% if bloodGroup == 'AB+'%}selected{% endif %}>AB+</option>
+                          <option value="AB-" {% if bloodGroup == 'AB-'%}selected{% endif %}>AB-</option>
+                          <option value="O+" {% if bloodGroup == 'O+' %}selected{% endif %}>O+</option>
+                          <option value="O-" {% if bloodGroup == 'O-' %}selected{% endif %}>O-</option>
                         </select>
                       </div>
                     </div>

@@ -118,7 +118,7 @@ def profileImageUpdate(request, user_id):
             image = user.img
 
         user.img = image
-        user.updatedAt = timezone.now()
+        user.updated_at = timezone.now()
         user.save()
 
     return redirect("profile", user_id=user_id)
@@ -129,29 +129,31 @@ def changePassword(request, user_id):
         oldpasw = request.POST.get("oldpasw")
         newpasw = request.POST.get("newpasw")
         user = UserLogin.objects.get(id=user_id)
-        print(oldpasw, newpasw)
         regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
         res = any(chr.isdigit() for chr in newpasw)
         uppercase = any(ele.isupper() for ele in newpasw)
         if oldpasw == newpasw:
-            return render(request, "profile.html", context={"message": "Old Password is Wrong"}) 
+            messages.success(request, "Old Password Entered iis Wrong")
+            return redirect("profile", user_id=user_id)
         try:
             user = UserLogin.objects.get(id=user_id)
             user_input_password = oldpasw.encode('utf-8')
             if bcrypt.checkpw(user_input_password, user.password):
                 if len(newpasw) < 8 or  regex.search(newpasw) == None or res == False or uppercase == False:
-                    message = {"message": "Password Should contain atleast 1 numeric character, 1 special character, 1 Uppercase character and alphabets with minimum length of 8 "}
-                    return render(request, "profile.html", context=message)    
+                    messages.success(request,"Password Should contain atleast 1 numeric character, 1 special character, 1 Uppercase character and alphabets with minimum length of 8 ")
+                    return redirect("profile", user_id=user_id)   
                 else:
                     password = newpasw.encode("utf-8")
                     salt = bcrypt.gensalt()
                     hashed_password = bcrypt.hashpw(password, salt)
                     user.password=hashed_password
                     user.updated_at =  timezone.now()
+                    user.save()
                     messages.success(request, "Password changed successfully")
                     return redirect("profile", user_id=user_id)
             else:
-                return render(request, "profile.html", context={"message": "Old Password is Wrong"}) 
+                messages.success(request, "Old Password Entered is Wrong")
+                return redirect("profile", user_id=user_id)
         except UserLogin.DoesNotExist:
             message = "User Not Exists. You can create your account by signing up"
         

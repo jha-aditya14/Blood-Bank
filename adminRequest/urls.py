@@ -5,8 +5,8 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('<int:user_id>/dashboard/', views.dashBoard, name='dashboard'),
-    path('<int:user_id>/admin-dashboard/', views.adminDashBoard, name='adminDashboard'),
+    path('<int:user_id>/admin-request/', views.adminRequest, name='adminRequest'),
+    path('<int:user_id>/request-approval/<int:requestId>/', views.requestApproval, name='requestApproval'),
 ]
 
 if settings.DEBUG:

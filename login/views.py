@@ -23,7 +23,7 @@ def signin(request):
         long_location = str(request.POST.get("longitude"))
 
         try:
-            user = UserLogin.objects.get(email=uemail)
+            user = UserLogin.objects.get(email=uemail, is_staff=False)
             user_input_password = passw.encode('utf-8')
             if bcrypt.checkpw(user_input_password, user.password):
                 url = f"/{user.id}/dashboard/"

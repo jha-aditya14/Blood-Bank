@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'bloodBank.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bloodBankDb',
+        'NAME': 'postgres',
         'USER':'postgres',
         'PASSWORD': '9560',
         'HOST':'localhost',
-        'PORT':'5433'
+        'PORT':'5432'
     }
 }
 

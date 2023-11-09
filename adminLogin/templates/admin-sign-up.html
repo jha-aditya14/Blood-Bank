@@ -21,45 +21,45 @@
   <link id="pagestyle" href="/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
   <style>
     .input-group {
-          position: relative;
-      }
-  
+      position: relative;
+    }
+
     .input-group-append {
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        background: none;
-        border: none;
-        outline: none;
-        padding: 0;
-        z-index: 1;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      outline: none;
+      padding: 0;
+      z-index: 1;
     }
 
     #eyeIcon {
-        opacity: 0.5;
-        pointer-events: none;
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     .form-control:focus {
-        position: relative;
-        z-index: 2;
+      position: relative;
+      z-index: 2;
     }
 
     .form-control:focus+.input-group .input-group-append {
-        z-index: 3;
+      z-index: 3;
     }
 
     @media (max-width: 576px) {
-        .input-group-append {
-            right: 5px;
-        }
+      .input-group-append {
+        right: 5px;
+      }
 
-        #eyeIcon {
-            font-size: 16px;
-        }
+      #eyeIcon {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -71,7 +71,8 @@
       <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="../pages/dashboard.html">
         Blood Bank
       </a>
-      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon mt-2">
           <span class="navbar-toggler-bar bar1"></span>
           <span class="navbar-toggler-bar bar2"></span>
@@ -117,28 +118,30 @@
   <!-- End Navbar -->
   <main class="main-content  mt-0">
     {% if message %}
-      <div id="myModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <i class="fas fa-exclamation-circle fa-3x"></i>
-          <p id="error-message">{{ message }}</p>
-        </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <i class="fas fa-exclamation-circle fa-3x"></i>
+        <p id="error-message">{{ message }}</p>
       </div>
+    </div>
     {% endif %}
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('/assets/img/back-ground-main.jpeg'); background-position: top;">
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
+      style="background-image: url('/assets/img/back-ground-main.jpeg'); background-position: top;">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
             <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-            <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+            <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for
+              free.</p>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-        <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+        <div class="col-xl-12 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
               <h5>Admin - Registration</h5>
@@ -146,31 +149,81 @@
             <div class="card-body">
               <form role="form" action="/sign-up/" method="POST">
                 {% csrf_token %}
-                <div class="mb-3">
-                  <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name" aria-label="Name">
-                </div>
-                <div class="mb-3">
-                  <input type="text" id="lname" name="lname" class="form-control" placeholder="Last Name" aria-label="Name">
-                </div>
-                <div class="mb-3">
-                  <input type="email" id="email" name="email" class="form-control" placeholder="Email" aria-label="Email">
-                </div>
-                <div class="mb-3">
-                  <input type="password" id="userpass" name="password" class="form-control" placeholder="Password" aria-label="Password">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name"
+                        aria-label="Name">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" id="lname" name="lname" class="form-control" placeholder="Last Name"
+                        aria-label="Name">
+                    </div>
+                    <div class="mb-3">
+                      <input type="email" id="email" name="email" class="form-control" placeholder="Email"
+                        aria-label="Email">
+                    </div>
+                    <div class="input-group mb-3">
+                      <input type="password" id="userpass" name="password" class="form-control"
+                          placeholder="Password" aria-label="Password">
+                      <div class="input-group-append">
+                          <button type="button" id="show-password-btn" onclick="togglePasswordVisibility()"
+                              style="background-color: transparent; border: none;">
+                              <i id="eyeIcon" class="fas fa-eye"></i>
+                          </button>
+                      </div>
+                  </div>
+                    <!-- <div class="mb-3">
+                      <input type="password" id="userpass" name="password" class="form-control" placeholder="Password"
+                        aria-label="Password">
+                    </div>
+                    <div class="input-group-append">
+                      <button type="button" id="show-password-btn" onclick="togglePasswordVisibility()"
+                        style="background-color: transparent;border: none; size: 20px; margin-top: 135px;">
+                        <i id="eyeIcon" class="fas fa-eye"></i>
+                      </button>
+                    </div> -->
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <input type="text" id="hos" name="hos" class="form-control" placeholder="Hospital Name"
+                        aria-label="Name">
+                    </div>
+                    <div class="mb-3">
+                      <input type="email" id="hosEmail" name="hosEmail" class="form-control"
+                        placeholder="Hospital Email" aria-label="Email">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" id="city" name="city" class="form-control" placeholder="City"
+                        aria-label="Name">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" id="state" name="state" class="form-control" placeholder="State"
+                        aria-label="Name">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <input type="text" id="country" name="country" class="form-control" placeholder="Country"
+                        aria-label="Name">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" id="postalCode" name="postalCode" class="form-control"
+                        placeholder="Postal Code" aria-label="Name">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" id="address" name="address" class="form-control" placeholder="Address"
+                        aria-label="Name">
+                    </div>
+                  </div>
                 </div>
                 <input type="" id="latitude" name="latitude" style="display: none;">
                 <input type="" id="longitude" name="longitude" style="display: none;">
-                <div class="input-group-append">
-                  <button type="button" id="show-password-btn"
-                    onclick="togglePasswordVisibility()"
-                    style="padding-top: 130px; background-color: transparent;border: none;">
-                    <i id="eyeIcon" class="fas fa-eye"></i>
-                  </button>
-                </div>
                 <div class="text-center">
-                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
+                  <button type="submit" class="btn bg-gradient-dark w-20 my-4 mb-2">Sign up</button>
                 </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="/" class="text-dark font-weight-bolder">Sign in</a></p>
+                <p class="text-sm mt-3 mb-0">Already have an account? <a href="/"
+                    class="text-dark font-weight-bolder">Sign in</a></p>
               </form>
             </div>
           </div>
@@ -182,7 +235,7 @@
   <footer class="footer py-5">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 mx-auto text-center mb-4 mt-2">     
+        <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
           <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
             <span class="text-lg fab fa-twitter"></span>
           </a>
@@ -197,7 +250,8 @@
       <div class="row">
         <div class="col-8 mx-auto text-center mt-1">
           <p class="mb-0 text-secondary">
-            Copyright © <script>
+            Copyright ©
+            <script>
               document.write(new Date().getFullYear())
             </script> Soft by Aditya Jha.
           </p>
@@ -221,26 +275,26 @@
     }
   </script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    // Check if geolocation is available in the browser
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            document.getElementById("latitude").value = latitude;
-            document.getElementById("longitude").value = longitude;
-            // Display the location information in the placeholder element
-            const locationInfo = document.getElementById("locationInfo");
-            // locationInfo.textContent = `Your location: Latitude ${latitude}, Longitude ${longitude}`;
-        }, function(error) {
-            // Handle errors here
-            console.error("Error getting location:", error);
+    document.addEventListener("DOMContentLoaded", function () {
+      // Check if geolocation is available in the browser
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          document.getElementById("latitude").value = latitude;
+          document.getElementById("longitude").value = longitude;
+          // Display the location information in the placeholder element
+          const locationInfo = document.getElementById("locationInfo");
+          // locationInfo.textContent = `Your location: Latitude ${latitude}, Longitude ${longitude}`;
+        }, function (error) {
+          // Handle errors here
+          console.error("Error getting location:", error);
 
-            // Display an error message in the placeholder element
-            const locationInfo = document.getElementById("locationInfo");
-            // locationInfo.textContent = "Error fetching your location.";
+          // Display an error message in the placeholder element
+          const locationInfo = document.getElementById("locationInfo");
+          // locationInfo.textContent = "Error fetching your location.";
         });
-    } else {
+      } else {
         // Geolocation is not available in this browser
         const locationInfo = document.getElementById("locationInfo");
         // locationInfo.textContent = "Geolocation is not supported in your browser.";
@@ -253,4 +307,5 @@
   <script src="/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
   <script src="/assets/js/signup/signup.js"></script>
 </body>
+
 </html>

@@ -126,5 +126,5 @@ def signup(request):
                 message = {
                     "message": f"You have successfully signed up. User Name is {username.lower()} "
                 }
-                return render(request, "sign-in.html", context=message)
+                return redirect("signin")
     return render(request, "sign-up.html")

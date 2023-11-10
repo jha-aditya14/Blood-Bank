@@ -3,7 +3,7 @@ from django.db import models
 
 class UserLogin(models.Model):
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=30, unique=True)
+    username = models.CharField(max_length=300, unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     password = models.BinaryField()

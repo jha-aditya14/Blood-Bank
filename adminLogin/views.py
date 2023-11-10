@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from login.models import UserLogin, UserDetails 
+from login.models import UserLogin, UserDetails
+from hospitalOperations.models import HospitalLogin, HospitalDetails, UserAdminHos
 from django.contrib import messages
 from datetime import timedelta
 import datetime
@@ -49,10 +50,19 @@ def adminSignUp(request):
         passw = str(request.POST.get("password"))
         fname = str(request.POST.get("fname"))
         lname = str(request.POST.get("lname"))
+        hosName = str(request.POST.get("hosName"))
+        hosEmail = str(request.POST.get("hosEmail"))
+        address = str(request.POST.get("address"))
+        hosCity = str(request.POST.get("citya"))
+        hosState = str(request.POST.get("state"))
+        hosCountry = str(request.POST.get("country"))
+        hosPostalCode = str(request.POST.get("postalCode"))
         lat_location = str(request.POST.get("latitude")) 
         long_location = str(request.POST.get("longitude"))
         username = str(uemail.split("@")[1]) + "." + lname+"."+fname+str(uemail.split("@")[0])
         city, state, postal, country = get_location_info(float(lat_location), float(long_location))
+
+        print(hosEmail)
         # Create a new user
         checkEmail = emailCheck(uemail)
         password = passw.encode("utf-8")
@@ -62,13 +72,13 @@ def adminSignUp(request):
             user = UserLogin.objects.get(email=uemail)
             messages.error(request, "A user with this email already exists.")
             message = {"message": "A user with this email already exists."}
-            return render(request, "sign-up.html", context=message)
+            return render(request, "admin-sign-up.html", context=message)
         except UserLogin.DoesNotExist:
             # Handle the case where the user doesn't exist
             regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
             res = any(chr.isdigit() for chr in passw)
             uppercase = any(ele.isupper() for ele in passw)
-            if fname == "" and lname == "" and uemail == "" and passw == "":
+            if fname == "" and lname == "" and uemail == "" and passw == "" and hosName=="" and hosEmail=="" and address == "" and hosCity=="" and hosState=="" and hosCountry==""and hosPostalCode=="":
                 message = {"message": "All Fields Required"}
                 return render(request, "admin-sign-up.html", context=message)  
             if fname == "":
@@ -86,11 +96,31 @@ def adminSignUp(request):
             if passw == "":
                 message = {"message": "Password Required "}
                 return render(request, "admin-sign-up.html", context=message)  
+            if hosName == "":
+                message = {"message": "Hospital Name Required "}
+                return render(request, "admin-sign-up.html", context=message)  
+            if hosEmail == "":
+                message = {"message": "Hospital Emai Required "}
+                return render(request, "admin-sign-up.html", context=message)  
+            if address == "":
+                message = {"message": "Address Required "}
+                return render(request, "admin-sign-up.html", context=message)  
+            if hosCity == "":
+                message = {"message": "City Required "}
+                return render(request, "admin-sign-up.html", context=message)  
+            if hosState == "":
+                message = {"message": "State Required "}
+                return render(request, "admin-sign-up.html", context=message)  
+            if hosPostalCode == "":
+                message = {"message": "Postal Code Required "}
+                return render(request, "admin-sign-up.html", context=message)  
+            
             if len(passw) < 8 or  regex.search(passw) == None or res == False or uppercase == False:
                 message = {"message": "Password Should contain atleast 1 numeric character, 1 special character, 1 Uppercase character and alphabets with minimum length of 8 "}
                 return render(request, "admin-sign-up.html", context=message)                
                 
             else:
+
                 username = str(uemail.split("@")[1]) + "." + lname + "." + fname + "." + uemail.split("@")[0]
                 user = UserLogin(
                     email=uemail,
@@ -113,18 +143,49 @@ def adminSignUp(request):
                     city = city,
                     state = state,
                     postal_code = postal,
-                    country = country 
-                )
-                
+                    country = country,
+                )     
                 userData.save()
 
+                hosUsername = str(hosEmail.split("@")[1]) + "." + hosName.lower() + "." + hosEmail.split("@")[0]
+                hospitals = HospitalLogin.objects.all()
+
+                if not hospitals:
+                    hospital = HospitalLogin(
+                        email = hosEmail,
+                        hosUsername = hosUsername,
+                        HosName = hosName,
+                        password = hashed_password,
+                        date_joined = timezone.now(),
+                    )
+                    hospital.save()
+                    
+                    hosData=HospitalLogin.objects.get(email=hosEmail)
+                    hospitalDetail = HospitalDetails(
+                        hos = hosData,
+                        city = hosCity,
+                        state = hosState,
+                        country = hosCountry,
+                        addressLine = address,
+                        postal_code = hosPostalCode,
+                        locality = address,
+                        location = str(lat_location+","+long_location),
+                    )
+                    hospitalDetail.save()
+                    
+                    userId = UserLogin.objects.get(email=uemail)
+                    hosUser = UserAdminHos(
+                        hos= hosData,
+                        user = userId,
+                    )
+                    hosUser.save()
+               
                 messages.success(
                     request,
                     f"You have successfully signed up. User Name is {username.lower()} ",
                 )
-                message = {
-                    "message": f"You have successfully signed up. User Name is {username.lower()} "
-                }
-                return render(request, "admin-sign-in.html", context=message)
-
+                # message = {
+                #     "message": f"You have successfully signed up. User Name is {username.lower()} "
+                # }
+                return redirect( "adminSignIn")
     return render(request, "admin-sign-up.html")

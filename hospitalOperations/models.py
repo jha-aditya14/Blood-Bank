@@ -4,8 +4,8 @@ from login.models import UserLogin
 
 class HospitalLogin(models.Model):
     email = models.EmailField(unique=True)
-    hosUsername = models.CharField(max_length=30, unique=True)
-    HosName = models.CharField(max_length=30)
+    hosUsername = models.CharField(max_length=300, unique=True)
+    HosName = models.CharField(max_length=300)
     password = models.BinaryField()
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -47,3 +47,7 @@ class UserHos(models.Model):
     date_of_approved = models.DateTimeField(null=True)
     date_of_sent = models.DateTimeField(auto_now_add=False, default=None) 
     location=models.CharField(null=True)
+
+class UserAdminHos(models.Model):
+    hos = models.ForeignKey(HospitalLogin, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserLogin, on_delete=models.CASCADE)

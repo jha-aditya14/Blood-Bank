@@ -179,13 +179,57 @@ def adminSignUp(request):
                         user = userId,
                     )
                     hosUser.save()
-               
+                
+                else:
+                    for hos in hospitals:
+                        if hos.HosName.replace(" ", "").lower() == hosName.replace(" ", "").lower():
+                            hosDat=HospitalLogin.objects.get(email=hos.email)
+                            userId = UserLogin.objects.get(email=uemail)
+                            hosUser = UserAdminHos(
+                                hos= hosDat,
+                                user = userId,
+                            )
+                            hosUser.save()
+                            messages.success(
+                                request,
+                                f"You have successfully signed up. User Name is {username.lower()} ",
+                            )
+                           
+                            return redirect( "adminSignIn")
+                        
+                    hospital = HospitalLogin(
+                        email = hosEmail,
+                        hosUsername = hosUsername,
+                        HosName = hosName,
+                        password = hashed_password,
+                        date_joined = timezone.now(),
+                    )
+                    hospital.save()
+                    
+                    hosData=HospitalLogin.objects.get(email=hosEmail)
+                    hospitalDetail = HospitalDetails(
+                        hos = hosData,
+                        city = hosCity,
+                        state = hosState,
+                        country = hosCountry,
+                        addressLine = address,
+                        postal_code = hosPostalCode,
+                        locality = address,
+                        location = str(lat_location+","+long_location),
+                    )
+                    hospitalDetail.save()
+                    
+                    userId = UserLogin.objects.get(email=uemail)
+                    hosUser = UserAdminHos(
+                        hos= hosData,
+                        user = userId,
+                    )
+                    hosUser.save()
+                    
                 messages.success(
                     request,
                     f"You have successfully signed up. User Name is {username.lower()} ",
                 )
-                # message = {
-                #     "message": f"You have successfully signed up. User Name is {username.lower()} "
-                # }
+                
                 return redirect( "adminSignIn")
     return render(request, "admin-sign-up.html")

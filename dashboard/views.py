@@ -48,7 +48,7 @@ def dashBoard(request, user_id):
     
     # current_year = timezone.now().year
     queryset = UserHos.objects.filter(
-        user_id=8  # Filter by user_id
+        user_id=user_id  # Filter by user_id
     ).values('date_of_approved').annotate(
         total_blood_in_ml=Sum('BloodInUnits')
     ).order_by('date_of_approved')
@@ -94,20 +94,35 @@ def dashBoard(request, user_id):
         hospital_details = hospitalDetail.get(hos_id, "N/A")
         blood_group_info = bloodGroupDetail.get(hos_id, ["N/A"])
         # Create a list with the combined data for each hospital
-        combinedData={"hosId":hos_id,
-            "hosName":hos_name,
-            "hosDetails":hospital_details,
-            "aPos": blood_group_info[0],
-            "bPos": blood_group_info[1],
-            "abPos": blood_group_info[2],
-            "oPos": blood_group_info[3],
-            "aNeg": blood_group_info[4],
-            "bNeg": blood_group_info[5],
-            "abNeg": blood_group_info[6],
-            "oNeg": blood_group_info[7],
-        }
-        tableData.append(combinedData)
-    
+        if blood_group_info[0] != "N/A":
+            combinedData={"hosId":hos_id,
+                "hosName":hos_name,
+                "hosDetails":hospital_details,
+                "aPos": blood_group_info[0],
+                "bPos": blood_group_info[1],
+                "abPos": blood_group_info[2],
+                "oPos": blood_group_info[3],
+                "aNeg": blood_group_info[4],
+                "bNeg": blood_group_info[5],
+                "abNeg": blood_group_info[6],
+                "oNeg": blood_group_info[7],
+            }
+        
+            tableData.append(combinedData)
+        else:
+            combinedData={"hosId":hos_id,
+                "hosName":hos_name,
+                "hosDetails":hospital_details,
+                "aPos": "N/A",
+                "bPos": "N/A",
+                "abPos": "N/A",
+                "oPos": "N/A",
+                "aNeg": "N/A",
+                "bNeg": "N/A",
+                "abNeg": "N/A",
+                "oNeg": "N/A",
+            }
+            tableData.append(combinedData)
     data = {
         "userId": user_id,
         "todayUsers" : user_count_logined_today,
@@ -206,24 +221,40 @@ def adminDashBoard(request, user_id):
         hospital_details = hospitalDetail.get(hos_id, "N/A")
         blood_group_info = bloodGroupDetail.get(hos_id, ["N/A"])
         # Create a list with the combined data for each hospital
-        combinedData={"hosId":hos_id,
-            "hosName":hos_name,
-            "hosDetails":hospital_details,
-            "aPos": blood_group_info[0],
-            "bPos": blood_group_info[1],
-            "abPos": blood_group_info[2],
-            "oPos": blood_group_info[3],
-            "aNeg": blood_group_info[4],
-            "bNeg": blood_group_info[5],
-            "abNeg": blood_group_info[6],
-            "oNeg": blood_group_info[7],
-        }
-        tableData.append(combinedData)
+        if blood_group_info[0] != "N/A":
+            combinedData={"hosId":hos_id,
+                "hosName":hos_name,
+                "hosDetails":hospital_details,
+                "aPos": blood_group_info[0],
+                "bPos": blood_group_info[1],
+                "abPos": blood_group_info[2],
+                "oPos": blood_group_info[3],
+                "aNeg": blood_group_info[4],
+                "bNeg": blood_group_info[5],
+                "abNeg": blood_group_info[6],
+                "oNeg": blood_group_info[7],
+            }
+        
+            tableData.append(combinedData)
+        else:
+            combinedData={"hosId":hos_id,
+                "hosName":hos_name,
+                "hosDetails":hospital_details,
+                "aPos": "N/A",
+                "bPos": "N/A",
+                "abPos": "N/A",
+                "oPos": "N/A",
+                "aNeg": "N/A",
+                "bNeg": "N/A",
+                "abNeg": "N/A",
+                "oNeg": "N/A",
+            }
+            tableData.append(combinedData)
     
     data = {
         "userId": user_id,
         "todayUsers" : user_count_logined_today,
-        "UserLoginPercentage" : percentage_increase_login,
+        "UserLoginPercentage" : round(percentage_increase_login,2),
         "requestCount": request_count,
         "NewUsers":newUsers,
         "YourRequest":yourRequest,

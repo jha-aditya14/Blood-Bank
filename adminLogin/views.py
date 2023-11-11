@@ -25,7 +25,8 @@ def adminSignIn(request):
         try:
             user = UserLogin.objects.get(email=uemail, is_staff=True)
             user_input_password = passw.encode('utf-8')
-            if bcrypt.checkpw(user_input_password, user.password):
+            user_stored_password = user.password.tobytes()
+            if bcrypt.checkpw(user_input_password,user_stored_password):
                 url = f"/{user.id}/admin-dashboard/"
                 UserDetails.objects.filter(user_id=user.id).update(
                    last_logined=timezone.now(),

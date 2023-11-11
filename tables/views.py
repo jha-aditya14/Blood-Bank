@@ -12,11 +12,12 @@ def table(request, user_id):
 
     # Iterate through each hospital login to fetch details
     for hospitalLogin in hospitalLogins:
-        details = HospitalDetails.objects.filter(hos=hospitalLogin).first()
-        bloodBank = HospitalBloodBanks.objects.filter(hos=hospitalLogin).first()
+        details = HospitalDetails.objects.filter(hos=hospitalLogin)
+        bloodBank = HospitalBloodBanks.objects.filter(hos=hospitalLogin)
+        
 
         if details and bloodBank:
-
+            print(details.city)
             tableData.append({
                 "hosId":hospitalLogin.id,
                 "email": hospitalLogin.email,
@@ -44,7 +45,7 @@ def table(request, user_id):
         "hospitalDetails": tableData,
     }
 
-    return render(request, "adminTable.html", context=data)
+    return render(request, "table.html", context=data)
 
 def requestForBlood(request, user_id):
     if request.method == "POST":
@@ -77,12 +78,13 @@ def requestForBlood(request, user_id):
         
 def adminTable(request, user_id):
     hospitalLogins = HospitalLogin.objects.all()
-
+    
     # Create a dictionary to store hospital details
     tableData = []
 
     # Iterate through each hospital login to fetch details
     for hospitalLogin in hospitalLogins:
+        print(hospitalLogin.id)
         details = HospitalDetails.objects.filter(hos=hospitalLogin).first()
         bloodBank = HospitalBloodBanks.objects.filter(hos=hospitalLogin).first()
 
@@ -114,6 +116,7 @@ def adminTable(request, user_id):
         "userId": user_id,
         "hospitalDetails": tableData,
     }
+    print(tableData)
 
     return render(request, "adminTable.html", context=data)
 

@@ -133,7 +133,7 @@
             </div>
           </div>
         </div>
-        <a href="#" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
+        <a href="https://drive.google.com/file/d/1dLcUmLHdIZ_ZvrflWK0T6sTIVejQU58w/view?usp=share_link" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
       </div>
     </aside>
     <main class="main-content position-relative border-radius-lg ">
@@ -398,8 +398,7 @@
                   document.write(new Date().getFullYear())
                 </script>,
                   made with <i class="fa fa-heart"></i> by
-                  <a href="#" class="font-weight-bold" target="_blank">Aditya
-                    Jha</a>
+                  <a href="#" class="font-weight-bold" target="_blank">Utkarsh</a>
                   for a better web.
                 </div>
               </div>
@@ -407,8 +406,8 @@
                 <ul
                   class="nav nav-footer justify-content-center justify-content-lg-end">
                   <li class="nav-item">
-                    <a href="https://jha-aditya.onrender.com/"
-                      class="nav-link text-muted" target="_blank">Aditya Jha</a>
+                    <a href="#"
+                      class="nav-link text-muted" target="_blank">Utkarsh</a>
                   </li>
                 </ul>
               </div>
@@ -485,7 +484,7 @@
                 id="dark-version" onclick="darkMode(this)">
             </div>
           </div>
-          <a class="btn btn-outline-dark w-100" href="#">View documentation</a>
+          <a class="btn btn-outline-dark w-100" href="https://drive.google.com/file/d/1dLcUmLHdIZ_ZvrflWK0T6sTIVejQU58w/view?usp=share_link">View documentation</a>
           <div class="w-100 text-center">
             <h6 class="mt-3">Thank you for sharing!</h6>
           </div>
@@ -524,15 +523,16 @@
     }); 
   </script>
 
-    <script>
+<script>
   document.addEventListener("DOMContentLoaded", function() {
   // Check if geolocation is available in the browser
   if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          document.getElementById("latitude").value = latitude;
-          document.getElementById("longitude").value = longitude;
+          console.log(`Your location: Latitude ${latitude}, Longitude ${longitude}`);
+
+
           // Display the location information in the placeholder element
           const locationInfo = document.getElementById("locationInfo");
           // locationInfo.textContent = `Your location: Latitude ${latitude}, Longitude ${longitude}`;

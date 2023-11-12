@@ -48,7 +48,7 @@ def dashBoard(request, user_id):
     
     # current_year = timezone.now().year
     queryset = UserHos.objects.filter(
-        user_id=user_id  # Filter by user_id
+        user_id=8  # Filter by user_id
     ).values('date_of_approved').annotate(
         total_blood_in_ml=Sum('BloodInUnits')
     ).order_by('date_of_approved')
@@ -123,10 +123,11 @@ def dashBoard(request, user_id):
                 "oNeg": "N/A",
             }
             tableData.append(combinedData)
+    
     data = {
         "userId": user_id,
         "todayUsers" : user_count_logined_today,
-        "UserLoginPercentage" : percentage_increase_login,
+        "UserLoginPercentage" : round(percentage_increase_login,2),
         "requestCount": request_count,
         "NewUsers":newUsers,
         "YourRequest":yourRequest,
@@ -135,6 +136,8 @@ def dashBoard(request, user_id):
         "units":unitBlood,
         "tableData":tableData,
     }
+
+
 
     return render(request, "dashboard.html", context=data)
 

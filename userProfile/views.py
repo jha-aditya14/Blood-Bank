@@ -85,6 +85,7 @@ def profile(request, user_id):
         phone = i.phone_number
         locality = i.locality
         dob = i.dob
+    formatted_dob = None
     if dob != None:
         formatted_dob = datetime.strptime(str(dob), "%Y-%m-%d").strftime("%Y-%m-%d")
 

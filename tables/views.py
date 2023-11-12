@@ -9,15 +9,14 @@ def table(request, user_id):
 
     # Create a dictionary to store hospital details
     tableData = []
+    L=[]
 
     # Iterate through each hospital login to fetch details
     for hospitalLogin in hospitalLogins:
-        details = HospitalDetails.objects.filter(hos=hospitalLogin)
-        bloodBank = HospitalBloodBanks.objects.filter(hos=hospitalLogin)
+        details = HospitalDetails.objects.filter(hos=hospitalLogin).first()
+        bloodBank = HospitalBloodBanks.objects.filter(hos=hospitalLogin).first()
         
-
         if details and bloodBank:
-            print(details.city)
             tableData.append({
                 "hosId":hospitalLogin.id,
                 "email": hospitalLogin.email,
@@ -39,7 +38,32 @@ def table(request, user_id):
                 "abNegative": bloodBank.AB_Negative,
                 "oNegative": bloodBank.O_Negative,
             })
-
+        
+        else:
+            tableData.append({
+                "hosId":hospitalLogin.id,
+                "email": hospitalLogin.email,
+                "hosName": hospitalLogin.HosName,
+                "addressLine": details.addressLine,
+                "locality": details.locality,
+                "city": details.city,
+                "state": details.state,
+                "country": details.country,
+                "postalCode": details.postal_code,
+                "phone": details.phone_number,
+                "location": details.location,
+                "aPositive": "N/A",
+                "bPositive": "N/A",
+                "abPositive": "N/A",
+                "oPositive": "N/A",
+                "aNegative": "N/A",
+                "bNegative": "N/A",
+                "abNegative": "N/A",
+                "oNegative": "N/A",
+        })
+               
+                
+    print("tableData:", tableData)
     data = {
         "userId": user_id,
         "hospitalDetails": tableData,
@@ -84,13 +108,12 @@ def adminTable(request, user_id):
 
     # Iterate through each hospital login to fetch details
     for hospitalLogin in hospitalLogins:
-        print(hospitalLogin.id)
         details = HospitalDetails.objects.filter(hos=hospitalLogin).first()
         bloodBank = HospitalBloodBanks.objects.filter(hos=hospitalLogin).first()
 
         if details and bloodBank:
 
-            tableData.append({
+                tableData.append({
                 "hosId":hospitalLogin.id,
                 "email": hospitalLogin.email,
                 "hosName": hospitalLogin.HosName,
@@ -111,6 +134,29 @@ def adminTable(request, user_id):
                 "abNegative": bloodBank.AB_Negative,
                 "oNegative": bloodBank.O_Negative,
             })
+        
+        else:
+            tableData.append({
+                "hosId":hospitalLogin.id,
+                "email": hospitalLogin.email,
+                "hosName": hospitalLogin.HosName,
+                "addressLine": details.addressLine,
+                "locality": details.locality,
+                "city": details.city,
+                "state": details.state,
+                "country": details.country,
+                "postalCode": details.postal_code,
+                "phone": details.phone_number,
+                "location": details.location,
+                "aPositive": "N/A",
+                "bPositive": "N/A",
+                "abPositive": "N/A",
+                "oPositive": "N/A",
+                "aNegative": "N/A",
+                "bNegative": "N/A",
+                "abNegative": "N/A",
+                "oNegative": "N/A",
+        })
 
     data = {
         "userId": user_id,

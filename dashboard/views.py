@@ -136,9 +136,7 @@ def dashBoard(request, user_id):
         "units":unitBlood,
         "tableData":tableData,
     }
-
-
-
+    
     return render(request, "dashboard.html", context=data)
 
 def adminDashBoard(request, user_id):

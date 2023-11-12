@@ -224,7 +224,12 @@
                           <div class="d-flex px-2 py-1">
                             <div
                               class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">{{data.hosName}}</h6>
+                            
+                              {% if data.hosName == ownHosName %}
+                              <a href="www.google.com" style="color: green;" ><i class="fas fa-user text-success"></i> {{ data.hosName }}</a>
+                            {% else %}
+                              <h6 class="mb-0 text-sm">{{ data.hosName }}</h6>
+                            {% endif %}
                               <p class="text-xs text-secondary mb-0">{{data.email}}</p>
                             </div>
                           </div>

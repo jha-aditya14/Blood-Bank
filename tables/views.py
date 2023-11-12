@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from hospitalOperations.models import UserHos, HospitalLogin, HospitalDetails, HospitalBloodBanks 
+from hospitalOperations.models import UserHos, HospitalLogin, HospitalDetails, HospitalBloodBanks, UserAdminHos
 from django.utils import timezone
 # Create your views here.
 
@@ -63,7 +63,6 @@ def table(request, user_id):
         })
                
                 
-    print("tableData:", tableData)
     data = {
         "userId": user_id,
         "hospitalDetails": tableData,
@@ -106,14 +105,14 @@ def adminTable(request, user_id):
     # Create a dictionary to store hospital details
     tableData = []
 
+    hosUser =  UserAdminHos.objects.filter(user_id=user_id) 
+    ownhosName= HospitalLogin.objects.filter(id=hosUser[0].hos_id)
     # Iterate through each hospital login to fetch details
     for hospitalLogin in hospitalLogins:
         details = HospitalDetails.objects.filter(hos=hospitalLogin).first()
         bloodBank = HospitalBloodBanks.objects.filter(hos=hospitalLogin).first()
-
         if details and bloodBank:
-
-                tableData.append({
+            tableData.append({
                 "hosId":hospitalLogin.id,
                 "email": hospitalLogin.email,
                 "hosName": hospitalLogin.HosName,
@@ -157,12 +156,12 @@ def adminTable(request, user_id):
                 "abNegative": "N/A",
                 "oNegative": "N/A",
         })
-
+    
     data = {
         "userId": user_id,
         "hospitalDetails": tableData,
+        "ownHosName":str(ownhosName[0].HosName), 
     }
-    print(tableData)
 
     return render(request, "adminTable.html", context=data)
 

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from hospitalOperations.models import UserHos,HospitalLogin
+from hospitalOperations.models import UserHos,HospitalLogin, UserAdminHos
 from django.utils import timezone
 
 # Create your views here.
 
 def adminRequest(request, user_id):
-    userRequests = UserHos.objects.filter(user_id=user_id)
+    adminHos = UserAdminHos.objects.filter(user_id=user_id)
+    userRequests = UserHos.objects.filter(hos_id=adminHos[0].hos_id)
     tableData=[]
     userHosdata={}
     for i in userRequests:

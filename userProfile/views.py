@@ -161,4 +161,3 @@ def changePassword(request, user_id):
 
 
         return redirect("profile", user_id=user_id)
-   

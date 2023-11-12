@@ -83,7 +83,7 @@ def dashBoard(request, user_id):
     hospitalBloodGroup = HospitalBloodBanks.objects.all()
 
     for bg in hospitalBloodGroup:
-        blood_groups = [int(x.strip()) for x in bg.A_Positive.split(',') + bg.B_Positive.split(',') + bg.AB_Positive.split(',') + bg.O_Positive.split(',') + bg.A_Negative.split(',') + bg.B_Negative.split(',') + bg.AB_Negative.split(',') + bg.O_Negative.split(',')]
+        blood_groups = [(x.strip()) for x in bg.A_Positive.split(',') + bg.B_Positive.split(',') + bg.AB_Positive.split(',') + bg.O_Positive.split(',') + bg.A_Negative.split(',') + bg.B_Negative.split(',') + bg.AB_Negative.split(',') + bg.O_Negative.split(',')]
         bloodGroupDetail[bg.hos.id] = blood_groups
 
     combinedData = {}
@@ -211,7 +211,7 @@ def adminDashBoard(request, user_id):
     hospitalBloodGroup = HospitalBloodBanks.objects.all()
 
     for bg in hospitalBloodGroup:
-        blood_groups = [int(x.strip()) for x in bg.A_Positive.split(',') + bg.B_Positive.split(',') + bg.AB_Positive.split(',') + bg.O_Positive.split(',') + bg.A_Negative.split(',') + bg.B_Negative.split(',') + bg.AB_Negative.split(',') + bg.O_Negative.split(',')]
+        blood_groups = [(x.strip()) for x in bg.A_Positive.split(',') + bg.B_Positive.split(',') + bg.AB_Positive.split(',') + bg.O_Positive.split(',') + bg.A_Negative.split(',') + bg.B_Negative.split(',') + bg.AB_Negative.split(',') + bg.O_Negative.split(',')]
         bloodGroupDetail[bg.hos.id] = blood_groups
 
     combinedData = {}
